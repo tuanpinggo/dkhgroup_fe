@@ -1,3 +1,4 @@
+import { useAuth } from "@/hooks/useAuth";
 import { Button, Stack, Typography } from "@mui/material";
 import { IconAddressBook, IconArrowNarrowRight, IconLogout, IconShoppingBagEdit, IconUser } from "@tabler/icons-react";
 import { useRouter } from "next/router";
@@ -5,14 +6,24 @@ import { useRouter } from "next/router";
 export default function ButtonAccount(){
 
     const router = useRouter()
+    const {logout} = useAuth()
+
+    const handleLogout = async () => {
+        try {
+            await logout()
+            router.push('/')
+        } catch (error) {
+            console.log("🚀 ~ handleLogout ~ error:", error)
+        }
+    }
 
     return(
         <Stack spacing={2}>
             <Button 
                 variant="contained" 
-                color={router.asPath === "/tai-khoan/thong-tin-tai-khoan" ? "secondary" : "grey"}
+                color={router.asPath === "/tai-khoan" ? "secondary" : "grey"}
                 size="large"
-                onClick={() => router.push('/tai-khoan/thong-tin-tai-khoan')}
+                onClick={() => router.push('/tai-khoan')}
             >
                 <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"} width={"100%"}>
                     <Stack direction={"row"} spacing={1} alignItems={"center"}>
@@ -56,7 +67,7 @@ export default function ButtonAccount(){
                     <IconArrowNarrowRight />
                 </Stack>
             </Button>
-            <Button variant="contained" color="error" size="large">
+            <Button variant="contained" color="error" size="large" onClick={handleLogout}>
                 <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"} width={"100%"}>
                     <Stack direction={"row"} spacing={1} alignItems={"center"}>
                         <IconLogout size={18}/>

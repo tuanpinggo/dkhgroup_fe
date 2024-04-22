@@ -4,8 +4,23 @@ import HeaderMain from "./main/header";
 import Grid from '@mui/material/Unstable_Grid2';
 import { globalConfig } from "@/theme/globalConfig";
 import ButtonAccount from "./account/button";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import LoadingScreen from "@/components/screen/loading";
 
 export default function AccountLayout({children}){
+
+    const {userData, isLoading} = useAuth()
+
+    const router = useRouter()
+
+    if(isLoading) return <LoadingScreen />
+
+    if(!userData){
+        router.push('/dang-nhap')
+        return <LoadingScreen />
+    }
+
     return(
         <Stack 
             direction={"column"} 
@@ -14,7 +29,7 @@ export default function AccountLayout({children}){
             width={"100%"}
             flexDirection={"column"}
         >
-            <HeaderMain />
+            <HeaderMain userData={userData}/>
             <Box flex={1} py={8}>
                 <Container maxWidth={globalConfig.maxWidth}>
                     <Grid container spacing={2} justifyContent={"space-between"}>

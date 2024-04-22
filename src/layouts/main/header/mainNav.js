@@ -6,7 +6,7 @@ import IconHeader from "./icon";
 import { globalConfig } from "@/theme/globalConfig";
 import DefaultNavbar from "./navbar";
 
-export default function MainNav(){
+export default function MainNav({userData}){
     return(
         <Box component={"header"} bgcolor="#ffffff" >
             <Container maxWidth={globalConfig.maxWidth}>
@@ -21,7 +21,7 @@ export default function MainNav(){
                         <SearchBox />
                     </Grid>
                     <Grid xs={1}>
-                        <IconHeader />
+                        <IconHeader userData={userData}/>
                     </Grid>
                 </Grid>
             </Container>

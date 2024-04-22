@@ -1,7 +1,8 @@
-import { Badge } from "@mui/material";
+import { Badge, Button } from "@mui/material";
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Image from "next/image";
+import { IconColorFilter, IconShoppingBag } from "@tabler/icons-react";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -13,15 +14,15 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-export default function IconCart(){
+export default function IconCart({iconSize = 28, iconColor = "#422F2C"}){
     return(
-        <StyledBadge badgeContent={4} color="primary">
-            <Image
-                src="/assets/icon-cart.svg"
-                width={24}
-                height={24}
-                alt="icon cart"
-            />
-        </StyledBadge>
+        <Button sx={{minWidth: '40px', mr: 1}}>
+            <StyledBadge badgeContent={4} color="primary">
+                <IconShoppingBag 
+                    size={iconSize}
+                    color={iconColor}
+                />
+            </StyledBadge>
+        </Button>
     )
 }

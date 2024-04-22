@@ -2,6 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2'; 
 import PostGrid from "./grid";
 import { format } from "date-fns";
+import { globalConfig } from "@/theme/globalConfig";
 
 export default function LastPost({datas}){
     return(
@@ -14,12 +15,12 @@ export default function LastPost({datas}){
                     <Grid xs={12} md={6} lg={3} key={item.id}>
                         <PostGrid
                             link={`/blog/${item?.attributes?.slug}_id=${item.id}`}
-                            thumbnail={`http://localhost:1337${item?.attributes?.thumbnail?.data?.attributes?.url}`}
+                            thumbnail={`${globalConfig.img_url}${item?.attributes?.thumbnail?.data?.attributes?.url}`}
                             width={item?.attributes?.thumbnail?.data?.attributes?.width || 599}
                             height={item?.attributes?.thumbnail?.data?.attributes?.height || 300}
-                            linkCat={'/'}
+                            linkCat={`/category/${item?.attributes?.blog_category?.data?.attributes?.slug}`}
                             title={item?.attributes?.title}
-                            category_title={item?.attributes?.blog_categories?.data[0]?.attributes?.name}
+                            category_title={item?.attributes?.blog_category?.data?.attributes?.name}
                             date={format(new Date(item?.attributes?.createdAt), 'dd/MM/yyyy')}
                             description={item?.attributes?.excerpt}
                         />

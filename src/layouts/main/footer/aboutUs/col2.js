@@ -1,8 +1,15 @@
+import LoadingScreen from "@/components/screen/loading";
+import { useContact } from "@/hooks/useContact";
 import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function FooterAboutUsSection2(){
+
+    const {contact, isLoading} = useContact()
+
+    if(isLoading) return <LoadingScreen />
+
     return(
         <Stack spacing={1}>
             <Stack 
@@ -21,16 +28,14 @@ export default function FooterAboutUsSection2(){
                     <Typography variant="body2" component={"span"} color="#fff">
                         Hotline
                     </Typography>
-                    <Link href="tel:0962663459">
-                        <Typography fontWeight={700} color="#fff">
-                            0962663459 - Mr Khoa
-                        </Typography>
-                    </Link>
-                    <Link href="tel:0963863459">
-                        <Typography fontWeight={700} color="#fff">
-                            0963863459 - Mr Hải - GĐ Kinh Doanh
-                        </Typography>
-                    </Link>
+
+                    {contact && contact?.data?.attributes?.Hotline?.map(item =>
+                        <Link href={`tel:${item?.phone}`} key={item.id}>
+                            <Typography fontWeight={700} color="#fff">
+                                {item?.phone} - {item?.text}
+                            </Typography>
+                        </Link>
+                    )}
                 </Stack>
             </Stack>
             <Stack 
@@ -45,16 +50,19 @@ export default function FooterAboutUsSection2(){
                     height={24}
                     alt="phone icon"
                 />
-                <Link href="mailto:contact@dkhgroup.com.vn">
-                    <Stack spacing={0}>
-                        <Typography variant="body2" component={"span"} color="#fff">
-                            Email
-                        </Typography>
-                        <Typography fontWeight={700} color="#fff">
-                            contact@dkhgroup.com.vn
-                        </Typography>
-                    </Stack>
-                </Link>
+                <Stack spacing={0}>
+                    <Typography variant="body2" component={"span"} color="#fff">
+                        Email
+                    </Typography>
+
+                    {contact && contact?.data?.attributes?.Email?.map(item =>
+                        <Link href={`mailto:${item.email}`} key={item.id}>
+                            <Typography fontWeight={700} color="#fff">
+                                {item.email}
+                            </Typography>
+                        </Link>
+                    )}
+                </Stack>
             </Stack>
         </Stack>
     )

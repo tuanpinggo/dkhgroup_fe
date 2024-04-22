@@ -5,6 +5,8 @@ import Link from "next/link";
 import Grid from '@mui/material/Unstable_Grid2';
 
 import { createMarkup } from "@/components/createMarkup";
+import SeoMetaTag from "@/components/pageConfig/meta";
+import { cdnImage } from "@/components/ui/cdnImage";
  
 export async function getStaticProps({ params }) {
 
@@ -12,7 +14,7 @@ export async function getStaticProps({ params }) {
 
     const id = slug.slice(slug.search('_id=') + 4)
 
-    const res = await fetch(`${globalConfig.api_url}/blogs/${id}?populate[0]=blog_categories`)
+    const res = await fetch(`${globalConfig.api_url}/blogs/${id}?populate[0]=thumbnail&populate[1]=seo&populate[2]=seo.thumbnail&populate[3]=blog_category`)
     const posts = await res.json()
    
     return {
@@ -35,24 +37,32 @@ export async function getStaticPaths() {
         },
     }))
    
-    // We'll pre-render only these paths at build time.
-    // { fallback: 'blocking' } will server-render pages
-    // on-demand if the path doesn't exist.
     return { paths, fallback: 'blocking' }
 }
 
 export default function BLogPost({posts}){
+
     return(
         <>
+            <SeoMetaTag
+                title={posts?.data?.attributes?.seo?.title || posts?.data?.attributes?.title}
+                description={posts?.data?.attributes?.seo?.description || posts?.data?.attributes?.description}
+                thumbnail={
+                    cdnImage(
+                        posts?.data?.attributes?.seo?.thumbnail?.data?.attributes?.url ||
+                        posts?.data?.attributes?.thumbnail?.data?.attributes?.url
+                    )
+                }
+            />
             <Stack spacing={0}>
                 <Box bgcolor={"#f8f8f8"}>
                     <Container maxWidth={globalConfig.maxWidth}>
                         <Stack py={8} spacing={2}>
-                            <Link href={`/category/${posts?.data?.attributes?.blog_categories?.data[0]?.attributes?.slug}`}>
+                            <Link href={`/category/${posts?.data?.attributes?.blog_category?.data?.attributes?.slug}`}>
                                 <Stack direction={"row"} alignItems={"center"} spacing={1}>
                                     <WestIcon fontSize="15"/>
                                     <Typography variant="body2" fontWeight={500}>
-                                        Quay lại trang {posts?.data?.attributes?.blog_categories?.data[0]?.attributes?.name}
+                                        Quay lại trang {posts?.data?.attributes?.blog_category?.data?.attributes?.name}
                                     </Typography>
                                 </Stack>
                             </Link>

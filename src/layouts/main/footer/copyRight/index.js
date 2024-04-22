@@ -1,8 +1,16 @@
+import LoadingScreen from "@/components/screen/loading";
+import { cdnImage } from "@/components/ui/cdnImage";
+import { useContact } from "@/hooks/useContact";
 import { Box, Stack, Typography } from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2';
 import Image from "next/image";
+import Link from "next/link";
 
 export default function FooterCopyRight(){
+
+    const {contact, isLoading} = useContact()
+    if(isLoading) return <LoadingScreen />
+
     return(
         <Box component={"section"} py={4}>
             <Grid 
@@ -13,10 +21,10 @@ export default function FooterCopyRight(){
             >
                 <Grid xs={12} md={8}>
                     <Typography variant="body1" color={"#fff"} fontWeight={700}>
-                        @ CÔNG TY TNHH DKH GROUP VIỆT NAM
+                        {contact?.data?.attributes?.company_name}
                     </Typography>
                     <Typography variant="body2" color={"#fff"}>
-                        Mã số doanh nghiệp: 0109598490. Giấy chứng nhận đăng ký doanh nghiệp do Sở Kế hoạch và Đầu tư TP Hà Nội cấp lần đầu ngày 00/00/2019.
+                        {contact?.data?.attributes?.info_company}
                     </Typography>
                 </Grid>
                 <Grid xs={12} md={4}>
@@ -26,18 +34,16 @@ export default function FooterCopyRight(){
                         justifyContent={{xs: "flex-start", md: "flex-end"}} 
                         alignItems={"center"}
                     >
-                        <Image
-                            src={'/assets/ncsc.png'}
-                            width={73}
-                            height={33}
-                            alt="Tín nhiệm mạng - DKH Group"
-                        />
-                        <Image
-                            src={'/assets/bct.png'}
-                            width={93}
-                            height={35}
-                            alt="Thông báo bộ công thương - DKH Group"
-                        />
+                        {contact && contact?.data?.attributes?.img_copyright?.map(item => 
+                            <Link href={item.link} key={item.id}>
+                                <Image
+                                    src={cdnImage(item?.image?.data?.attributes?.url,'/assets/ncsc.png')}
+                                    width={item?.image?.data?.attributes?.width || 78}
+                                    height={item?.image?.data?.attributes?.height || 33}
+                                    alt="Tín nhiệm mạng - DKH Group"
+                                />
+                            </Link>
+                        )}
                     </Stack>
                 </Grid>  
             </Grid>

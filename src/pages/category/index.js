@@ -1,14 +1,21 @@
+import SeoMetaTag from "@/components/pageConfig/meta"
 import LastPost from "@/components/post/lastPost"
 import { globalConfig } from "@/theme/globalConfig"
 import { Box, Container } from "@mui/material"
 
 export default function CategoryPage({ posts }){
     return(
-        <Box py={5}>
-            <Container maxWidth={globalConfig.maxWidth}>
-                <LastPost datas={posts?.data}/>
-            </Container>
-        </Box>
+        <>
+            <SeoMetaTag
+                title={"Tin tức - Thông cáo báo chí DKHGroup"}
+                description={'Tin tức - Thông cáo báo chí mới nhất từ DKHGroup'}
+            />
+            <Box py={5}>
+                <Container maxWidth={globalConfig.maxWidth}>
+                    <LastPost datas={posts?.data}/>
+                </Container>
+            </Box>
+        </>
     )
 }
 

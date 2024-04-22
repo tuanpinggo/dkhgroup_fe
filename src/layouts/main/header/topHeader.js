@@ -21,7 +21,7 @@ const menu = [
     },
 ]
 
-export default function TopHeader(){
+export default function TopHeader({userData}){
     return(
         <Box bgcolor={"secondary.main"} py={2}>
             <Container maxWidth={globalConfig.maxWidth}>
@@ -43,9 +43,11 @@ export default function TopHeader(){
                                 </Link>
                             )}
 
-                            <Link href={"/dang-nhap"}>
+                            <Link 
+                                href={userData ? '/tai-khoan' : '/dang-nhap'}
+                            >
                                 <Typography variant="body2" fontWeight={600} lineHeight={1} fontSize={13} sx={styles.item}>
-                                    Đăng nhập
+                                    {userData ? `Xin chào ! ${userData?.fullname}` : "Đăng nhập"}
                                 </Typography>
                             </Link>
                         </Stack>

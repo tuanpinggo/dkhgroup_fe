@@ -3,15 +3,12 @@ import { Box, SpeedDial } from '@mui/material';
 import Image from 'next/image';
 import { IconPhone } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
-
-
-const actions = [
-  { icon: <IconPhone color='#ED3237'/>, name: 'Hotline: 0962663459', href: 'tel:0962663459' },
-  { icon: <Image src={"/assets/zalo-icon.svg"} width={30} height={30} alt="Zalo"/>, name: 'Zalo: 0962663459', href:"https://zalo.me/0962663459" },
-];
+import { useContact } from '@/hooks/useContact';
 
 export default function SpeedDialButtonDefault(){
 
+    const {contact, isLoading} = useContact()
+    
     const router = useRouter()
 
     return(
@@ -37,14 +34,18 @@ export default function SpeedDialButtonDefault(){
                 }}
                 icon={<Image src="/assets/icon-hotline.svg" width={90} height={92} alt="icon-hotline" />}
             >
-                {actions.map((action) => (
-                    <SpeedDialAction
-                        key={action.name}
-                        icon={action.icon}
-                        tooltipTitle={action.name}
-                        onClick={() => router.push(action.href)}
-                    />
-                ))}
+                <SpeedDialAction
+                    icon={<IconPhone color='#ED3237'/>}
+                    tooltipTitle={`Hotline: ${contact?.data?.attributes?.hotline_main || '0963863459'}`}
+                    onClick={() => router.push(`tel:${contact?.data?.attributes?.hotline_main1 || '0963863459'}`)}
+                />
+
+                <SpeedDialAction
+                    icon={<Image src={"/assets/zalo-icon.svg"} width={30} height={30} alt="Zalo"/>}
+                    tooltipTitle={`Zalo: ${contact?.data?.attributes?.zalo_main}`}
+                    onClick={() => router.push(`https://zalo.me/${contact?.data?.attributes?.zalo_main}`)}
+                />
+
             </SpeedDial>
         </Box>
     )

@@ -8,8 +8,8 @@ export default async function handleApi(req, res) {
     })
 
     let bodyData;
-    
-    if(req.body.length){
+
+    if(req?.method === "POST" || req?.method === "PUT" || req?.method === "PATCH"){
         bodyData = decryptData(req.body)
     }
 
@@ -17,17 +17,12 @@ export default async function handleApi(req, res) {
 
     const endpoint = req.url.slice(5)
 
+    if(!token) res.status(403).json('not allow')
+
     let headers = { 
         'Accept': 'application/json', 
         'Content-Type': 'application/json',
-    }
-
-    if(token){
-        headers = { 
-            'Accept': 'application/json', 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        }
+        'Authorization': `Bearer ${token}`,
     }
 
     let config = {

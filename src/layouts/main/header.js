@@ -1,12 +1,23 @@
 import { Box, Stack } from "@mui/material";
 import MainNav from "./header/mainNav";
 import TopHeader from "./header/topHeader";
+import HeaderMobile from "./header-mobile";
 
-export default function HeaderMain(){
+export default function HeaderMain({userData}){
     return(
-        <Stack borderBottom={"1px solid #f2f2f2"} spacing={0}>
-            <TopHeader />
-            <MainNav />
-        </Stack>
+        <>
+            <Box display={{xs: 'none', lg: "block"}}>
+                <Stack 
+                    spacing={0}
+                    sx={{xs: 'none', lg: "block"}}
+                >
+                    <TopHeader userData={userData}/>
+                    <MainNav userData={userData}/>
+                </Stack>
+            </Box>
+            <Box display={{xs: 'block', lg: "none"}}>
+                <HeaderMobile userData={userData}/>
+            </Box>
+        </>
     )
 }

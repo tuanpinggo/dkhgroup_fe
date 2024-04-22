@@ -10,17 +10,18 @@ const menu = [
     {
         id: 2,
         title: 'Tin tức - báo chí',
-        link: '/#'
+        link: '/category/tin-tuc'
     },
     {
-        id: 3,
-        title: 'Liên hệ - hỗ trợ',
-        link: '/#'
-    },
+        id: 4,
+        title: 'Tuyển dụng',
+        link: '/category/tuyen-dung'
+    }
 
 ]
 
 export default function FooterInfotSection2(){
+
     return(
         <Stack spacing={2}>
             <Typography variant="h3" component={"h2"} color={"#fff"} fontSize={16} fontWeight={700}>

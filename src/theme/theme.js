@@ -22,6 +22,9 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
+    gray: {
+      main: '#aaaaaa'
+    }
   },
   typography: {
     fontFamily: inter.style.fontFamily,

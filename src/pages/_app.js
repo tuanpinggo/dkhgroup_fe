@@ -11,6 +11,7 @@ import axiosClient from '@/axiosConfig/axiosClient';
 import { SWRConfig } from 'swr';
 
 import '@/styles/globals.css';
+import { Toaster } from 'react-hot-toast';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -26,8 +27,9 @@ export default function MyApp(props) {
         <SWRConfig value={{fetcher: url => axiosClient.get(url), shouldRetryOnError: true}}>
           <CssBaseline />
           <Layout>
-            <Component {...pageProps} />
+              <Component {...pageProps} />
           </Layout>
+          <Toaster position="top-right" />
         </SWRConfig>
       </ThemeProvider>
     </AppCacheProvider>

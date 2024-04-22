@@ -6,26 +6,26 @@ import Link from "next/link";
 export default function PostGrid({title,link,thumbnail,width,height,linkCat,category_title,date,description,imgHeight}){
     return(
         <Stack spacing={1.5} pb={2}>
-            <Box 
-                className="blog-cat-thumbnail"
-                sx={{
-                    '& img': {
-                        borderRadius: 2,
-                        width:'100%',
-                        height: imgHeight || '200px',
-                        objectFit: 'cover'
-                    }
-                }}
-            >
-                <Link href={link}>
-                    <Image
-                        src={thumbnail || '/assets/post-thumbnail.jpg'}
-                        width={width}
-                        height={height}
-                        alt={title}
-                    />
-                </Link>
-            </Box>
+            <Link href={link}>
+                <Box 
+                    className="blog-cat-thumbnail"
+                    sx={{
+                        '& img': {
+                            borderRadius: 2,
+                            width:'100%',
+                            height: imgHeight || '200px',
+                            objectFit: 'cover'
+                        }
+                    }}
+                >
+                        <Image
+                            src={thumbnail || '/assets/post-thumbnail.jpg'}
+                            width={width}
+                            height={height}
+                            alt={title}
+                        />
+                </Box>
+            </Link>
             <Stack direction={"row"} spacing={1} divider={<Divider orientation="vertical" flexItem />} justifyContent={"flex-start"} alignItems={"center"}>
                 <Link href={linkCat}>
                     <Stack direction={"row"} spacing={1}>
